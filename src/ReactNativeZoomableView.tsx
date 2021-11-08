@@ -47,6 +47,8 @@ class ReactNativeZoomableView extends Component<ReactNativeZoomableViewProps, Re
     onLongPress: null,
     longPressDuration: 700,
     captureEvent: false,
+    offsetYBoundRange: 0,
+    offsetXBoundRange: 0,
   };
 
   constructor(props) {
@@ -268,12 +270,13 @@ class ReactNativeZoomableView extends Component<ReactNativeZoomableViewProps, Re
     elementSize: number,
     zoomLevel: number,
   ) {
+    const extraRange = axis === 'x' ? this.props.offsetXBoundRange : this.props.offsetYBoundRange || 0;
     const zoomLevelOffsetValue = zoomLevel * offsetValue;
 
     const containerToScaledElementRatioSub = 1 - containerSize / elementSize;
     const halfLengthPlusScaledHalf = 0.5 + 0.5 / zoomLevel;
-    const startBorder = containerSize * containerToScaledElementRatioSub * halfLengthPlusScaledHalf;
-    const endBorder = (containerSize + startBorder - containerSize) * -1;
+    const startBorder = (containerSize) * containerToScaledElementRatioSub * halfLengthPlusScaledHalf + extraRange;
+    const endBorder = startBorder * -1;
 
     // calculate distance to start and end borders
     const distanceToStart = offsetValue - startBorder;

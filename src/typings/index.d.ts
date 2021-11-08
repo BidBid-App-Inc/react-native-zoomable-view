@@ -45,6 +45,9 @@ declare module '@dudigital/react-native-zoomable-view' {
     captureEvent?: boolean;
     style?: any;
 
+    offsetXBoundRange?: number;
+    offsetYBoundRange?: number;
+
     // callbacks
     onDoubleTapBefore?: (
       event: Event,
